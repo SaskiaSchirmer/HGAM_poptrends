@@ -17,6 +17,8 @@ library(patchwork)
 df <- read.table("mmyo_1991_2019.txt")
 df$location_id_fac <- factor(df$location_id)
 
+# use this model when estimating a hierarchical trend:
+
 # HGAM_nb: tempRE = F, family = "nb", type = "smooth"
 # HGAM_qp: tempRE = F, family = "quasipoisson", type = "smooth"
 # HGLM_nb: tempRE = F, family = "nb", type = "loglinear"
@@ -31,6 +33,8 @@ out <- poptrend::ptrend(count ~ trend(year, tempRE = F, type = "smooth") +
                         family = "nb", data = df, engine = "bam", discrete = TRUE, nthreads = 8)
 
 save(out, file = "mmyo_hgam_nb.Rdata")
+
+# use this mode when estimating a non-hierarchical trend:
 
 # GAM_nb: tempRE = F, family = "nb", type = "smooth"
 # GAM_qp: tempRE = F, family = "quasipoisson", type = "smooth"
